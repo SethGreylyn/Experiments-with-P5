@@ -1,1 +1,1 @@
-"# Experiments-with-P5"  git init git add README.md git commit -m "first commit" git remote add origin git@github.com:SethGreylyn/Experiments-with-P5.git git push -u origin master
+This project represents my experiments with the P5 Javascript library. Currently, the code in can.js provides a graphic representation of the Mandelbrot set, and was inspired by The Coding Train's Coding Challenge #21, which can be viewed at https://www.youtube.com/watch?v=6z7GQewK-Ks.

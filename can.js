@@ -1,8 +1,3 @@
-/**
- * This file provides a graphic representation of the Mandelbrot set, and was inspired by The Coding Train's Coding Challenge #21,
- * which can be viewed at https://www.youtube.com/watch?v=6z7GQewK-Ks.
- * If the image loads slowly, try rendering it on a smaller canvas.
- */
 'use strict';
 function setup(){
     createCanvas(640, 640);
