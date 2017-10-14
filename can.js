@@ -1,4 +1,7 @@
 'use strict';
+
+var stars = [];
+
 function setup(){
     createCanvas(640, 640);
     pixelDensity(1);
@@ -6,11 +9,93 @@ function setup(){
 }
 
 function draw() {
-    loadPixels();
-    var x = -0.8;
-    var y = 0.156;
-    basicJuliaSetPixels(x, y);
-    updatePixels();
+    //basicJuliaSetPixels(-0.8, 0.156);
+    //fractalTree(QUARTER_PI/Math.exp(1), 200);
+    //starfield();
+    //snakeGame();
+ }
+
+ function snakeGame() {
+     background(0.51);
+ }
+
+ function starfield() {
+    background(0);
+    translate(width/2, height/2);
+    stars = setupStars();
+    stars.forEach((star)=>{
+        star.update(50);
+        star.show();
+    });
+ }
+
+ function setupStars() {
+    if (stars.length !== 0) {
+        return stars;
+    }
+    var starsLimit = 800;
+    var Star = function () {
+        var x = random(-width, width);
+        var y = random(-height, height);
+        var d = random(width);
+        var pd = d;
+        var update = function (decrement) {
+            d = d - decrement;
+            if (d < 1) {
+                d = width;
+                x = random(-width, width);
+                y = random(-height, height);
+                pd = d;
+            }
+        };
+        var show = function () {
+            fill(1);
+            noStroke();
+            var sx = map(x/d, 0, 1, 0, width);
+            var sy = map(y/d, 0, 1, 0, height);
+    
+            var r = map(d, 0, width, 8, 0);
+            ellipse(sx, sy, r, r);
+    
+            var px = map(x/pd, 0, 1, 0, width);
+            var py = map(y/pd, 0, 1, 0, height);
+            stroke(1);
+            line(px, py, sx, sy);
+            pd = d;
+        };
+        return {
+            x,
+            y,
+            update,
+            show
+        };
+    };
+    for (var starsIndex = 0; starsIndex < starsLimit; ++starsIndex) {
+        stars[starsIndex] = new Star();
+    }
+    return stars;
+}
+
+ function fractalTree(angle, stemLength) {
+    background(0.51);
+    stroke(1);
+    translate(width/2, height);
+    var branch = function(length) {
+        if (length < 1) {
+            return;
+        }
+        line(0, 0, 0, -length);
+        translate(0, -length);
+        push();
+        rotate(angle);
+        branch(length*(2/3));
+        pop();
+        push();
+        rotate(-angle);
+        branch(length*(2/3));
+        pop();
+    };
+    branch(stemLength);
  }
 
  /**
@@ -22,8 +107,9 @@ function draw() {
   * initial y-coordinate of the current pixel.
   */
  function basicJuliaSetPixels(realComp, imagiComp) {
-    var mapMin = -1.5; // The minimum range of the pixel map
-    var mapMax = 1.5; // The maximum range of the pixel map
+    loadPixels();
+    var mapMin = -2; // The minimum range of the pixel map
+    var mapMax = 2; // The maximum range of the pixel map
     var iterLimit = 100; // The maximum number of iterations to put each pixel through
     var squareMagBound = 36; // If the square of the magnitude of an output point exceeds this value, we assume the value diverges.
 
@@ -76,4 +162,5 @@ function draw() {
             pixels[pix + 3] = 255;
         }
     }
- }
+    updatePixels();
+}
