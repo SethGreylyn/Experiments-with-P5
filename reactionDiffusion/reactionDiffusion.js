@@ -1,3 +1,9 @@
+/**
+ * This is my mostly-solo attempt at the reaction diffusion coding challenge, for which I only used the video
+ * as a spot reference. As you can see, I went overboard and grid-ised the canvas and made each cell an object.
+ * Not really satisfied, and might revisit later.
+ */
+
 'use strict';
 
 var feedRate = 0.055;
